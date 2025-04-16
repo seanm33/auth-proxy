@@ -13,7 +13,7 @@ RUN go mod download && go mod verify
 # Build the command inside the container.
 # CGO_ENABLED=0 means build without C bindings, making it statically linked.
 # -ldflags="-s -w" strips debug information, reducing binary size.
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /studio-auth-proxy .
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /auth-proxy .
 
 # Use a minimal alpine image for the final stage
 FROM alpine:latest
@@ -21,7 +21,7 @@ FROM alpine:latest
 WORKDIR /
 
 # Copy the built binary from the builder stage.
-COPY --from=builder /studio-auth-proxy /studio-auth-proxy
+COPY --from=builder /auth-proxy /auth-proxy
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
