@@ -13,6 +13,7 @@ import (
 
 	"github.com/coreos/go-oidc/v3/oidc"
 	"github.com/gorilla/sessions"
+	"github.com/joho/godotenv"
 	"golang.org/x/oauth2"
 )
 
@@ -21,10 +22,10 @@ var (
 	auth0ClientID      string
 	auth0ClientSecret  string
 	auth0CallbackURL   string
-	appBaseURL         string // Base URL where this auth service is hosted
+	appBaseURL         string
 	sessionSecretKey   string
 	requiredRole       string
-	roleClaimNamespace string // The namespace used in the Auth0 Action
+	roleClaimNamespace string
 
 	store        *sessions.CookieStore
 	oauth2Config *oauth2.Config
@@ -46,7 +47,7 @@ type CustomClaims struct {
 
 func loadConfig() {
 	// Optional: Load .env file for local development
-	// godotenv.Load()
+	godotenv.Load()
 
 	auth0Domain = os.Getenv("AUTH0_DOMAIN")
 	auth0ClientID = os.Getenv("AUTH0_CLIENT_ID")
